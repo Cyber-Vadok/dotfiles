@@ -1,0 +1,71 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+}
+
+order += "wireless wlan0"
+order += "ethernet eth0"
+order += "battery all"
+order += "disk /"
+order += "memory"
+order += "load"
+order += "tztime local"
+order += "volume master"
+
+wireless wlan0 {
+        format_up = "🌐W: (%quality at %essid) %ip"
+        format_down = "❌W: down❌"
+}
+
+ethernet eth0 {
+        # if you use %speed, i3status requires root privileges
+        format_up = "E: %ip (%speed)🌐"
+        format_down = "❌E: down❌"
+}
+
+battery all {
+        format ="🔋%percentage %remaining🔋"
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPN {
+        pidfile = "/var/run/vpnc/pid"
+}
+
+tztime local {
+        format = "🗓️%Y-%m-%d %H:%M:%S🗓️"
+}
+
+load {
+        format = "%1min 💻"
+}
+
+disk "/" {
+        format = "💻 %avail"
+}
+
+volume master {
+        format = "🎶: %volume🎶"
+        format_muted = "🎶muted (%volume)🎶"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+memory {
+        format = "%used | %available"
+        threshold_degraded = "1G"
+        format_degraded = "MEMORY < %available"
+}
+
